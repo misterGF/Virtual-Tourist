@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,117 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cfO-3O-5Zx">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <animations/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="600" id="9mG-Lo-gIS"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="9mG-Lo-gIS"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="dkF-jb-Bh0" appends="YES" id="IWA-5r-FKn"/>
+                                </connections>
+                            </mapView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8At-lU-cSN">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Pl7-fS-Xc4"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Virtual Tourist" id="FAn-OV-geg">
+                                        <barButtonItem key="backBarButtonItem" id="LAr-k5-hJZ"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="fOi-HC-n0l">
+                                            <connections>
+                                                <action selector="editNavBtnAction:" destination="BYZ-38-t0r" id="dT3-w4-IdK"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="X2c-fv-PwY">
+                                <rect key="frame" x="275" y="275" width="50" height="50"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="1qw-e6-Sz2"/>
+                                    <constraint firstAttribute="width" constant="50" id="ENE-Kh-YCB"/>
+                                </constraints>
+                            </activityIndicatorView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Pins to Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Fz-aK-SBA">
+                                <rect key="frame" x="0.0" y="543" width="600" height="57"/>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="0.18475100214705431" blue="0.12352848219966084" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="Zp8-qJ-Q2j"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cfO-3O-5Zx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="16I-jJ-9Eg"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0Fz-aK-SBA" secondAttribute="bottom" id="D8G-9q-WCH"/>
+                            <constraint firstItem="X2c-fv-PwY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="H3A-s4-rbg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cfO-3O-5Zx" secondAttribute="trailing" constant="-20" id="HP9-0B-0fF"/>
+                            <constraint firstItem="cfO-3O-5Zx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Iaf-yR-YeX"/>
+                            <constraint firstItem="X2c-fv-PwY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Jk0-Sk-IhU"/>
+                            <constraint firstItem="8At-lU-cSN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="13" id="KD6-2h-Vv3"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="cfO-3O-5Zx" secondAttribute="bottom" id="PRG-ai-9JK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0Fz-aK-SBA" secondAttribute="trailing" constant="-20" id="SV9-RF-gUq"/>
+                            <constraint firstItem="8At-lU-cSN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="UtZ-VY-Xhc"/>
+                            <constraint firstItem="0Fz-aK-SBA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="clw-98-zYp"/>
+                            <constraint firstItem="8At-lU-cSN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="im3-AZ-IcI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8At-lU-cSN" secondAttribute="trailing" constant="-20" id="uiV-HY-hUS"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="KD6-2h-Vv3"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="X2c-fv-PwY" id="Uyd-rk-LOM"/>
+                        <outlet property="deletePinsLabel" destination="0Fz-aK-SBA" id="m2Y-5k-KYa"/>
+                        <outlet property="editNavBtn" destination="fOi-HC-n0l" id="Hl3-0K-1hA"/>
+                        <outlet property="mapView" destination="cfO-3O-5Zx" id="Ehi-zh-Cls"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer cancelsTouchesInView="NO" allowableMovement="10" minimumPressDuration="0.5" id="dkF-jb-Bh0">
+                    <connections>
+                        <action selector="addPin:" destination="BYZ-38-t0r" id="ozr-YL-EYs"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="375" y="329"/>
+        </scene>
+        <!--Photos View Controller-->
+        <scene sceneID="Yy3-Vm-bRk">
+            <objects>
+                <viewController storyboardIdentifier="PhotosVC" id="xgt-ah-jBg" customClass="PhotosViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NiU-w3-oAF"/>
+                        <viewControllerLayoutGuide type="bottom" id="nSD-X6-8w8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XQa-DA-l3D">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ce3-mw-ZRk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1051" y="337"/>
         </scene>
     </scenes>
 </document>

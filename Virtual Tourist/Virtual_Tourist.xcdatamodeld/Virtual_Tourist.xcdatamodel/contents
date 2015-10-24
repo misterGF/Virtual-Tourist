@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15A284" minimumToolsVersion="Automatic">
+    <entity name="Coordinates" syncable="YES"/>
+    <entity name="Photo" syncable="YES">
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pins" inverseName="relationship" inverseEntity="Pins" syncable="YES"/>
+    </entity>
+    <entity name="Pins" syncable="YES">
+        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="relationship" inverseEntity="Photo" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Coordinates" positionX="-54" positionY="-144" width="128" height="45"/>
+        <element name="Photo" positionX="106" positionY="-141" width="128" height="58"/>
+        <element name="Pins" positionX="-36" positionY="9" width="128" height="58"/>
+    </elements>
 </model>
