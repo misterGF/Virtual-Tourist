@@ -7,8 +7,23 @@
 //
 
 import UIKit
+import CoreData
+import MapKit
 
-class PhotosViewController : UIViewController {
+class PhotosViewController : UIViewController, NSFetchedResultsControllerDelegate {
+
+    var appDelegate: AppDelegate!
+    var session: NSURLSession!
     
+    // View Did Load
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //Get delegate and shared session
+        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        session = NSURLSession.sharedSession()
+                
+        
+    }
     
 }

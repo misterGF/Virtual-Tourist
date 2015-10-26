@@ -10,15 +10,6 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-
-    //Function for setting our nav bar
-    func customizeNavBar() {
-        
-        //Add navigation buttons
-        let rightButtonItem:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "toggleEdit:")
-        
-        navigationItem.setRightBarButtonItems([rightButtonItem], animated: true)
-    }
     
     func alertError(errorString: String?){
         

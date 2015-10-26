@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15A284" minimumToolsVersion="Automatic">
-    <entity name="Coordinates" syncable="YES"/>
+    <entity name="Coordinates" representedClassName="Coords" syncable="YES">
+        <attribute name="lastLocation" optional="YES" attributeType="Transformable" syncable="YES"/>
+    </entity>
     <entity name="Photo" syncable="YES">
         <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pins" inverseName="relationship" inverseEntity="Pins" syncable="YES"/>
     </entity>
@@ -8,7 +10,7 @@
         <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="relationship" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Coordinates" positionX="-54" positionY="-144" width="128" height="45"/>
+        <element name="Coordinates" positionX="-54" positionY="-144" width="128" height="60"/>
         <element name="Photo" positionX="106" positionY="-141" width="128" height="58"/>
         <element name="Pins" positionX="-36" positionY="9" width="128" height="58"/>
     </elements>

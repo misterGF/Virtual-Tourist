@@ -9,11 +9,9 @@
 import Foundation
 import UIKit
 import MapKit
+import CoreData
 
-class MapViewController: UIViewController, MKMapViewDelegate {
-    
-    var appDelegate: AppDelegate!
-    var session: NSURLSession!
+class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -54,40 +52,86 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext!
     
     // View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Get delegate and shared session
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        session = NSURLSession.sharedSession()
         mapView.delegate = self
         
-        // Check if core data has last location
-        if false {
+        var error: NSError?
+        do {
+            try fetchedCoordsController.performFetch()
+        } catch let error1 as NSError {
+            error = error1
+        }
+        
+        if let error = error {
+            print("Error performing initial fetch: \(error)")
+        }
+
+        for entry in fetchedCoordsController.fetchedObjects as! [Coords] {
+            
+            let coord = entry.lastLocation
             // Set initial loation
-            let initialLocation = CLLocation(latitude: 21.282778, longitude:  -157.829444)
-            centerMapOnLocation(initialLocation)
+            centerMapOnLocation(coord)
+        }
+        
+
+    }
+    
+    // Get our Coords
+    lazy var fetchedCoordsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Coordinates")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "lastLocation", ascending: true)]
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+        
+    }()
+    
+    // Delete coords
+    func deleteCoords(){
+        
+        print("Deleting coords")
+        for coord in fetchedCoordsController.fetchedObjects as! [Coords] {
+            sharedContext.deleteObject(coord)
+        }
+    }
+    
+    
+    // Delegate function for maps - Response to taps
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+
+        // Annotation selected. Will want to segue to our other view
+        performSegueWithIdentifier("toPhotoVC", sender: nil)
+        
+    }
+    
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+
+        //Check if defaults
+        let lat = mapView.centerCoordinate.latitude.description
+        let lng = mapView.centerCoordinate.longitude.description
+        
+        if lat != "17.9723915504974" && lng != "-40.0"   {
             
+            deleteCoords()
+            let coords = Coords(insertIntoMangedObjectContext: sharedContext)
+            coords.lastLocation = CLLocation(latitude: mapView.centerCoordinate.latitude , longitude: mapView.centerCoordinate.longitude)
+            CoreDataStackManager.sharedInstance().saveContext()
+            print("Region changed")
         } else {
-            
+            print("No change")
         }
 
     }
     
-    // Delegate function for maps - Response to taps
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        print("Annotation selected")
-        // Annotation selected. Will want to segue to our other view
-        let photoViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotosVC") as! PhotosViewController
-        
-        // Push the new VC onto the stack
-        //self.navigationController!.pushViewController(photoViewController, animated: true)
-        
-        
-        
-    }
     // Helper function to center based on coords
     func centerMapOnLocation(location: CLLocation) {
         let regionRadius: CLLocationDistance = 1000
