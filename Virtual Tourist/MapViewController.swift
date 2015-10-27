@@ -17,6 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var deletePinsLabel: UILabel!
     @IBOutlet weak var editNavBtn: UIBarButtonItem!
+    var mapChangedFromUSerInteraction = false
     
     // Nav button clicked function
     @IBAction func editNavBtnAction(sender: AnyObject) {
@@ -40,16 +41,32 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         //Only add pins if in the right mode
         if deletePinsLabel.hidden {
+            
             let location = sender.locationInView(self.mapView)
             let locCoords = self.mapView.convertPoint(location, toCoordinateFromView: self.mapView)
             let annotation = MKPointAnnotation()
             annotation.coordinate = locCoords
             annotation.title = "Pin added"
             self.mapView.addAnnotation(annotation)
+            
+            // Save to context
+            print("Pin location: \(locCoords)")
+            let pin = Pin(insertIntoMangedObjectContext: sharedContext)
+            pin.lat = locCoords.latitude
+            pin.lng = locCoords.longitude
+            CoreDataStackManager.sharedInstance().saveContext()
 
         } else {
             print("Long press detected but in wrong mode")
         }
+    }
+    
+    func addPinToMap(pinObj : Pin){
+       
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2DMake(pinObj.lat, pinObj.lng)
+        annotation.title = "Pin added"
+        self.mapView.addAnnotation(annotation)
     }
     
     var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext!
@@ -60,28 +77,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         mapView.delegate = self
         
-        var error: NSError?
-        do {
-            try fetchedCoordsController.performFetch()
-        } catch let error1 as NSError {
-            error = error1
-        }
-        
-        if let error = error {
-            print("Error performing initial fetch: \(error)")
-        }
-
+        fetchCoords()
         for entry in fetchedCoordsController.fetchedObjects as! [Coords] {
             
             let coord = entry.lastLocation
+            print("Coords from original \(coord)")
             // Set initial loation
             centerMapOnLocation(coord)
         }
         
+        fetchPins()
+        for entry in fetchedPinsController.fetchedObjects as! [Pin] {
+            print("Pin from coredata \(entry.lat) \(entry.lng)")
+            addPinToMap(entry)
+        }
+        
+        
 
     }
     
-    // Get our Coords
+    // Convience functions for our core data
     lazy var fetchedCoordsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Coordinates")
@@ -95,11 +110,68 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
     }()
     
+    lazy var fetchedPinsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Pin")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "lat", ascending: true)]
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+    }()
+    
+    // Check for user interaction for map changes
+    func mapViewRegionDidChangeFromUserInteraction() -> Bool {
+    
+        let view = self.mapView.subviews[0]
+        
+        if let gestureRecognizers = view.gestureRecognizers {
+            for recognizer in gestureRecognizers {
+                if(recognizer.state == UIGestureRecognizerState.Began || recognizer.state == UIGestureRecognizerState.Ended){
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func fetchPins(){
+ 
+        var error: NSError?
+        do {
+            try fetchedPinsController.performFetch()
+        } catch let error1 as NSError {
+            error = error1
+        }
+        
+        if let error = error {
+            print("Error performing initial fetch: \(error)")
+        }
+    }
+    
+    func fetchCoords(){
+        
+        var error: NSError?
+        do {
+            try fetchedCoordsController.performFetch()
+        } catch let error1 as NSError {
+            error = error1
+        }
+        
+        if let error = error {
+            print("Error performing initial fetch: \(error)")
+        }
+    }
+    
     // Delete coords
     func deleteCoords(){
         
         print("Deleting coords")
+        fetchCoords()
         for coord in fetchedCoordsController.fetchedObjects as! [Coords] {
+            print("Deleting \(coord)")
             sharedContext.deleteObject(coord)
         }
     }
@@ -108,36 +180,33 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     // Delegate function for maps - Response to taps
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
 
-        // Annotation selected. Will want to segue to our other view
-        performSegueWithIdentifier("toPhotoVC", sender: nil)
-        
+        // Annotation selected. Will want to segue to our other view or delete.
+        if editNavBtn.title == "Edit" {
+            performSegueWithIdentifier("toPhotoVC", sender: nil)
+        } else {
+            
+        }
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
 
-        //Check if defaults
-        let lat = mapView.centerCoordinate.latitude.description
-        let lng = mapView.centerCoordinate.longitude.description
-        
-        if lat != "17.9723915504974" && lng != "-40.0"   {
+        if(mapViewRegionDidChangeFromUserInteraction()) {
+            let lat = mapView.centerCoordinate.latitude.description
+            let lng = mapView.centerCoordinate.longitude.description
             
             deleteCoords()
             let coords = Coords(insertIntoMangedObjectContext: sharedContext)
             coords.lastLocation = CLLocation(latitude: mapView.centerCoordinate.latitude , longitude: mapView.centerCoordinate.longitude)
             CoreDataStackManager.sharedInstance().saveContext()
-            print("Region changed")
-        } else {
-            print("No change")
+            print("Region changed to \(lat) \(lng)")
         }
-
     }
     
     // Helper function to center based on coords
     func centerMapOnLocation(location: CLLocation) {
-        let regionRadius: CLLocationDistance = 1000
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-            regionRadius * 2.0, regionRadius * 2.0)
-        mapView.setRegion(coordinateRegion, animated: true)
+
+        mapView.setCenterCoordinate(location.coordinate, animated: true)
+        print("Got the following from core data \(location.coordinate)")
     }
 }
 
