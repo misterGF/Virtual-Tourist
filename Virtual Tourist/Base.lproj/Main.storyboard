@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="arz-sW-d00">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--Virtual Tourist-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
@@ -34,23 +34,6 @@
                                     <outletCollection property="gestureRecognizers" destination="dkF-jb-Bh0" appends="YES" id="IWA-5r-FKn"/>
                                 </connections>
                             </mapView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8At-lU-cSN">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="Pl7-fS-Xc4"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Virtual Tourist" id="FAn-OV-geg">
-                                        <barButtonItem key="backBarButtonItem" id="LAr-k5-hJZ"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="fOi-HC-n0l">
-                                            <connections>
-                                                <action selector="editNavBtnAction:" destination="BYZ-38-t0r" id="dT3-w4-IdK"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="X2c-fv-PwY">
                                 <rect key="frame" x="275" y="275" width="50" height="50"/>
                                 <animations/>
@@ -80,20 +63,18 @@
                             <constraint firstAttribute="trailingMargin" secondItem="cfO-3O-5Zx" secondAttribute="trailing" constant="-20" id="HP9-0B-0fF"/>
                             <constraint firstItem="cfO-3O-5Zx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Iaf-yR-YeX"/>
                             <constraint firstItem="X2c-fv-PwY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Jk0-Sk-IhU"/>
-                            <constraint firstItem="8At-lU-cSN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="13" id="KD6-2h-Vv3"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="cfO-3O-5Zx" secondAttribute="bottom" id="PRG-ai-9JK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0Fz-aK-SBA" secondAttribute="trailing" constant="-20" id="SV9-RF-gUq"/>
-                            <constraint firstItem="8At-lU-cSN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="UtZ-VY-Xhc"/>
                             <constraint firstItem="0Fz-aK-SBA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="clw-98-zYp"/>
-                            <constraint firstItem="8At-lU-cSN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="im3-AZ-IcI"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="8At-lU-cSN" secondAttribute="trailing" constant="-20" id="uiV-HY-hUS"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="KD6-2h-Vv3"/>
-                            </mask>
-                        </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="Virtual Tourist" id="FAn-OV-geg">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="fOi-HC-n0l">
+                            <connections>
+                                <action selector="editNavBtnAction:" destination="BYZ-38-t0r" id="dT3-w4-IdK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="X2c-fv-PwY" id="Uyd-rk-LOM"/>
                         <outlet property="deletePinsLabel" destination="0Fz-aK-SBA" id="m2Y-5k-KYa"/>
@@ -109,7 +90,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="375" y="329"/>
+            <point key="canvasLocation" x="1187" y="329"/>
         </scene>
         <!--Photos View Controller-->
         <scene sceneID="Yy3-Vm-bRk">
@@ -123,7 +104,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="43q-6w-0QA">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="43q-6w-0QA">
                                 <rect key="frame" x="0.0" y="60" width="600" height="159"/>
                                 <animations/>
                                 <constraints>
@@ -136,19 +117,7 @@
                                     </mask>
                                 </variation>
                             </mapView>
-                            <navigationBar contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jxp-uK-2FY">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="AED-5X-b3c"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Virtual Tourist" id="JZq-bs-yzg">
-                                        <barButtonItem key="backBarButtonItem" title="OK" id="bDq-iO-haU"/>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Zu5-7e-vtS">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Zu5-7e-vtS">
                                 <rect key="frame" x="0.0" y="219" width="600" height="322"/>
                                 <animations/>
                                 <constraints>
@@ -202,18 +171,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jfc-yJ-aHm" firstAttribute="bottom" secondItem="nSD-X6-8w8" secondAttribute="top" id="0SY-Sk-tcR"/>
-                            <constraint firstItem="jxp-uK-2FY" firstAttribute="top" secondItem="XQa-DA-l3D" secondAttribute="topMargin" id="2a7-H7-xHO"/>
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="top" secondItem="43q-6w-0QA" secondAttribute="bottom" id="4Wo-Uw-Tli"/>
                             <constraint firstAttribute="trailingMargin" secondItem="43q-6w-0QA" secondAttribute="trailing" constant="-20" id="Bpf-Ow-FHJ"/>
                             <constraint firstItem="jfc-yJ-aHm" firstAttribute="top" secondItem="Zu5-7e-vtS" secondAttribute="bottom" constant="2" id="Bz2-6P-0QM"/>
-                            <constraint firstItem="jxp-uK-2FY" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="-20" id="CrK-bf-2Jm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jfc-yJ-aHm" secondAttribute="trailing" constant="-20" id="LYg-dO-bXR"/>
-                            <constraint firstItem="43q-6w-0QA" firstAttribute="top" secondItem="jxp-uK-2FY" secondAttribute="bottom" id="NVt-ww-gMD"/>
                             <constraint firstItem="43q-6w-0QA" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="-20" id="WiJ-8o-Kmr"/>
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="top" secondItem="43q-6w-0QA" secondAttribute="bottom" id="ZtR-qe-JrX"/>
                             <constraint firstItem="nSD-X6-8w8" firstAttribute="top" secondItem="jfc-yJ-aHm" secondAttribute="bottom" id="acR-BE-AUt"/>
                             <constraint firstItem="jfc-yJ-aHm" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="-20" id="l1x-Yl-TdU"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="jxp-uK-2FY" secondAttribute="trailing" constant="-20" id="n3D-13-ftr"/>
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="-20" id="sS0-eY-kId"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zu5-7e-vtS" secondAttribute="trailing" constant="-20" id="vCg-ul-H0L"/>
                         </constraints>
@@ -227,7 +192,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ce3-mw-ZRk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1051" y="337"/>
+            <point key="canvasLocation" x="1863" y="337"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="tPj-cw-Wac">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="arz-sW-d00" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ljh-et-hKV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="hfk-ac-hye"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y88-wy-svO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="375" y="329"/>
         </scene>
     </scenes>
 </document>

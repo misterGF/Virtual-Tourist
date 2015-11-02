@@ -120,9 +120,7 @@
 				2B654F771BDBE7E200C673FE /* Info.plist */,
 				2B654F741BDBE7E200C673FE /* LaunchScreen.storyboard */,
 				2B654F6C1BDBE7E200C673FE /* Main.storyboard */,
-				2B654F6A1BDBE7E200C673FE /* MapViewController.swift */,
-				2B654F991BDBEC5600C673FE /* PhotosViewController.swift */,
-				2B654F9B1BDBF2C500C673FE /* VCHelper.swift */,
+				2B7432D21BE6DF1300F4E26E /* View Controllers */,
 				2B654F6F1BDBE7E200C673FE /* Virtual_Tourist.xcdatamodeld */,
 			);
 			path = "Virtual Tourist";
@@ -144,6 +142,16 @@
 				2B654F8D1BDBE7E200C673FE /* Info.plist */,
 			);
 			path = "Virtual TouristUITests";
+			sourceTree = "<group>";
+		};
+		2B7432D21BE6DF1300F4E26E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2B654F9B1BDBF2C500C673FE /* VCHelper.swift */,
+				2B654F6A1BDBE7E200C673FE /* MapViewController.swift */,
+				2B654F991BDBEC5600C673FE /* PhotosViewController.swift */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		2BB5AE5A1BDDA32D0036561C /* Class */ = {

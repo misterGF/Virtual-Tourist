@@ -12,7 +12,7 @@ import CoreData
 
 @objc(Pin)
 
-class Pin : NSManagedObject {
+class Pin : NSManagedObject, MKAnnotation {
  
     @NSManaged var lat: Double
     @NSManaged var lng: Double
@@ -21,9 +21,17 @@ class Pin : NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
-    convenience init(insertIntoMangedObjectContext context: NSManagedObjectContext) {
-        let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
-        self.init(entity: entity, insertIntoManagedObjectContext: context)
+    convenience init(lat: Double, lng: Double, context: NSManagedObjectContext) {
         
+        let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
+        
+        self.init(entity: entity, insertIntoManagedObjectContext: context)
+        self.lat = lat
+        self.lng = lng
+        
+    }
+    
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: lat, longitude: lng)
     }
 }
