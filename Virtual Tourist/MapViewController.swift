@@ -11,7 +11,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate {
     
     // Init my vars/outlets/etc
     @IBOutlet weak var mapView: MKMapView!
@@ -56,6 +56,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             print(pin)
             self.mapView.addAnnotation(pin)
             CoreDataStackManager.sharedInstance().saveContext()
+            
+            // TODO : Enhacement. Start DL of pics in the background
 
         } else {
             
@@ -98,10 +100,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     
     }
    
-    // Change the back button prior to segue
+    // Prepare our segue way info
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         navigationItem.title = "OK"
+        
+        //Pass variables to new VC
+        let destinationVC = segue.destinationViewController as! PhotosViewController
+        
+        destinationVC.selectedPin = sender as! Pin
     }
     
     // Convience functions for our core data - Get our center coords
@@ -201,13 +208,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
 
         // Annotation selected. Will want to segue to our other view or delete.
+        let pin = view.annotation as! Pin
+        
         if editNavBtn.title == "Edit" {
             
-            performSegueWithIdentifier("toPhotoVC", sender: nil)
+            performSegueWithIdentifier("toPhotoVC", sender: pin)
             
         } else {
-            
-            let pin = view.annotation as! Pin
             
             sharedContext.deleteObject(pin)
             mapView.removeAnnotation(view.annotation!)

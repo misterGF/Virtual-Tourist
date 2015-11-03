@@ -104,7 +104,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="43q-6w-0QA">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="43q-6w-0QA">
                                 <rect key="frame" x="0.0" y="60" width="600" height="159"/>
                                 <animations/>
                                 <constraints>
@@ -117,7 +117,7 @@
                                     </mask>
                                 </variation>
                             </mapView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Zu5-7e-vtS">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Zu5-7e-vtS">
                                 <rect key="frame" x="0.0" y="219" width="600" height="322"/>
                                 <animations/>
                                 <constraints>
@@ -178,6 +178,7 @@
                             <constraint firstItem="43q-6w-0QA" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="-20" id="WiJ-8o-Kmr"/>
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="top" secondItem="43q-6w-0QA" secondAttribute="bottom" id="ZtR-qe-JrX"/>
                             <constraint firstItem="nSD-X6-8w8" firstAttribute="top" secondItem="jfc-yJ-aHm" secondAttribute="bottom" id="acR-BE-AUt"/>
+                            <constraint firstItem="43q-6w-0QA" firstAttribute="top" secondItem="XQa-DA-l3D" secondAttribute="topMargin" constant="60" id="bXm-K0-iIy"/>
                             <constraint firstItem="jfc-yJ-aHm" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="-20" id="l1x-Yl-TdU"/>
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="-20" id="sS0-eY-kId"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zu5-7e-vtS" secondAttribute="trailing" constant="-20" id="vCg-ul-H0L"/>
@@ -189,6 +190,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="43q-6w-0QA" id="xPg-dO-Q2b"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ce3-mw-ZRk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
