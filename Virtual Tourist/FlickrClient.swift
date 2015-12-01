@@ -14,7 +14,7 @@ class FlickrClient: NSObject {
     
     //Example URL https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=fe61bca18be65e8a599397fca9bfba28&lat=42.36&lon=-71.03&extras=url_l&format=json&nojsoncallback=1
     
-    let FLICKR_API_KEY: String = "fe61bca18be65e8a599397fca9bfba28"
+    let FLICKR_API_KEY: String = "9f659d12912670b03e2e67b7086185de"
     let FLICKR_URL: String = "https://api.flickr.com/services/rest/"
     let SEARCH_METHOD: String = "flickr.photos.search"
     let EXTRAS: String = "url_l"
@@ -25,7 +25,7 @@ class FlickrClient: NSObject {
         super.init()
     }
     
-    func GetImages(lat: Double, lng: Double, completionHandler: (result: JSON!, error: String?) -> Void) {
+    func getImages(lat: Double, lng: Double, completionHandler: (result: JSON!, error: String?) -> Void) {
 
         Alamofire.request(.GET, FLICKR_URL , parameters: ["method": SEARCH_METHOD, "api_key": FLICKR_API_KEY, "lat": lat, "lon": lng, "extras": EXTRAS, "format": FORMAT_TYPE, "nojsoncallback": JSON_CALLBACK])
             .responseJSON { response in
@@ -45,26 +45,18 @@ class FlickrClient: NSObject {
             }
     }
     
-    func urlToImage(imageString: String){
+    func taskForImage(filePath: String, completionHandler: (imageData: NSData?, error: NSError?) ->  Void) {
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        Alamofire.request(.GET, filePath).response { (request, response, data, error) in
             
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                let url = NSURL(string: imageString)
-                let imageData = NSData(contentsOfURL: url!)
-                
-                if(imageData != nil){
-                    //self.imageView.image = UIImage(data: imageData!)
-                    
-                } else {
-                    //self.urlToImageView(imageString)
-                }
-                
-            });
-        });
+            if let error = error {
+                completionHandler(imageData: nil, error: error)
+            } else {
+                completionHandler(imageData: data, error: nil)
+            }
+        }
     }
-    
+           
     //Singleton
     class func sharedInstance() -> FlickrClient {
         
@@ -75,4 +67,8 @@ class FlickrClient: NSObject {
         return Singleton.sharedInstance
     }
     
+    //Image cache
+    struct Cache {
+        static let imageCache = ImageCache()
+    }
 }

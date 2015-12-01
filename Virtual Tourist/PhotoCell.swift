@@ -10,5 +10,10 @@ import Foundation
 import UIKit
 
 class PhotoCell: UICollectionViewCell {
+
+
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
+    var imageName: String = ""
 }

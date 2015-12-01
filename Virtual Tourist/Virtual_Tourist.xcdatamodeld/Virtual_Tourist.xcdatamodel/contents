@@ -4,17 +4,18 @@
         <attribute name="lastLocation" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <entity name="Photo" representedClassName="Photo" syncable="YES">
-        <attribute name="url" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="relationship" inverseEntity="Pin" syncable="YES"/>
+        <attribute name="imageID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="photos" inverseEntity="Pin" syncable="YES"/>
     </entity>
     <entity name="Pin" representedClassName="Pin" syncable="YES">
         <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="lng" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="relationship" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="pin" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <elements>
         <element name="Coordinates" positionX="-54" positionY="-144" width="128" height="60"/>
-        <element name="Photo" positionX="106" positionY="-141" width="128" height="75"/>
+        <element name="Photo" positionX="106" positionY="-141" width="128" height="90"/>
         <element name="Pin" positionX="-36" positionY="9" width="128" height="90"/>
     </elements>
 </model>

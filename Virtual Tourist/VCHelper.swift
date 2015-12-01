@@ -22,3 +22,20 @@ extension UIViewController {
     }
     
 }
+
+extension UIImageView {
+    public func imageFromUrl(urlString: String) {
+        
+        let url : NSURL = NSURL(string: urlString)!
+        let request: NSURLRequest = NSURLRequest(URL: url)
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let session = NSURLSession(configuration: config)
+        
+       session.dataTaskWithRequest(request, completionHandler: {(data, response, error) in
+            
+            self.image = UIImage(data: data!)
+            
+        });
+
+    }
+}
