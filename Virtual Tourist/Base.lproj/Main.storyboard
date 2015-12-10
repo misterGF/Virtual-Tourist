@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="arz-sW-d00">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="arz-sW-d00">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +20,6 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cfO-3O-5Zx">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="600" id="9mG-Lo-gIS"/>
@@ -36,7 +35,6 @@
                             </mapView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="X2c-fv-PwY">
                                 <rect key="frame" x="275" y="275" width="50" height="50"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="1qw-e6-Sz2"/>
                                     <constraint firstAttribute="width" constant="50" id="ENE-Kh-YCB"/>
@@ -44,7 +42,6 @@
                             </activityIndicatorView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Pins to Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Fz-aK-SBA">
                                 <rect key="frame" x="0.0" y="543" width="600" height="57"/>
-                                <animations/>
                                 <color key="backgroundColor" red="1" green="0.18475100214705431" blue="0.12352848219966084" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="57" id="Zp8-qJ-Q2j"/>
@@ -54,7 +51,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cfO-3O-5Zx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="16I-jJ-9Eg"/>
@@ -106,7 +102,6 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="43q-6w-0QA">
                                 <rect key="frame" x="0.0" y="60" width="600" height="159"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="OLL-sH-rej"/>
                                     <constraint firstAttribute="height" constant="159" id="b9P-1q-oQq"/>
@@ -119,7 +114,6 @@
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Zu5-7e-vtS">
                                 <rect key="frame" x="0.0" y="219" width="600" height="337"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="322" id="KKW-cD-U04"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="322" id="yt1-9S-Ma0"/>
@@ -133,7 +127,6 @@
                                 <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="WcA-Ku-Jzc">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="337"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <animations/>
                                 </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="QH0-qI-8ce" customClass="PhotoCell" customModule="Virtual_Tourist" customModuleProvider="target">
@@ -145,17 +138,13 @@
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="rrs-I7-zEu">
                                                     <rect key="frame" x="90" y="90" width="20" height="20"/>
-                                                    <animations/>
                                                 </activityIndicatorView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KVK-aH-7fN">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
-                                                    <animations/>
                                                 </imageView>
                                             </subviews>
-                                            <animations/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <animations/>
                                         <constraints>
                                             <constraint firstItem="rrs-I7-zEu" firstAttribute="centerY" secondItem="KVK-aH-7fN" secondAttribute="centerY" id="6tV-KL-Psr"/>
                                             <constraint firstAttribute="trailing" secondItem="KVK-aH-7fN" secondAttribute="trailing" id="Jjh-lh-1xk"/>
@@ -183,14 +172,12 @@
                             </collectionView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No images found :(" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6Q-5t-8jB">
                                 <rect key="frame" x="202" y="290" width="208" height="28"/>
-                                <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bo0-et-hdS">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                                <animations/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="2zm-SR-wj0"/>
                                     <barButtonItem enabled="NO" title="New Collection" id="7AP-cI-Fl6"/>
@@ -198,7 +185,6 @@
                                 </items>
                             </toolbar>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="u6Q-5t-8jB" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="170" id="2Ge-J1-2b5"/>
@@ -242,7 +228,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ljh-et-hKV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

@@ -22,10 +22,10 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var noImagesFound: UILabel!
 
-    var selectedIndexes = [NSIndexPath]()
-    var insertedIndexPaths: [NSIndexPath]!
-    var deletedIndexPaths: [NSIndexPath]!
-    var updatedIndexPaths: [NSIndexPath]!
+    //var selectedIndexes = [NSIndexPath]()
+    //var insertedIndexPaths: [NSIndexPath]!
+    //var deletedIndexPaths: [NSIndexPath]!
+    //var updatedIndexPaths: [NSIndexPath]!
     
     // View Did Load
     override func viewDidLoad() {
@@ -40,13 +40,19 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
 
         mapView.setRegion(region, animated: true)
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        let coords = selectedPin!.coordinate
+        
         // TODO : Check if images are already downloaded
         if false {
-        
+            
         } else {
             
-            let lat = coords.latitude 
-            let lng = coords.longitude 
+            let lat = coords.latitude
+            let lng = coords.longitude
             
             // Start activity indicator
             activityIndicator.startAnimating()
@@ -64,12 +70,12 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
                     print("Found this many images \(json.count)")
                     
                     for (key, subJson):(String, JSON) in json {
-      
+                        
                         let obj = subJson.object
                         let id =  obj.valueForKey("id")!
                         
                         if let url =  obj.valueForKey("url_l") {
-                        
+                            
                             print("key: \(key) id: \(id) url:  \(url)")
                             
                             let dictionary : [String: AnyObject] = [ "id" : id, "url" : url]
@@ -86,7 +92,6 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
                             }
                         }
                     }
-                    
                 } else {
                     // No photos display info
                     dispatch_async(dispatch_get_main_queue()) {
@@ -94,11 +99,11 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
                         self.activityIndicator.stopAnimating()
                     }
                 }
-                
             }
         }
-        
+
     }
+
 
     // Core Data Convenience
     lazy var sharedContext: NSManagedObjectContext =  {
