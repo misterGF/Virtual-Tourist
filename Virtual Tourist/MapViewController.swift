@@ -53,7 +53,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             let lng : Double = locCoords.longitude
             
             let pin = Pin(lat: lat , lng: lng, context: sharedContext)
-            print(pin)
+            // print(pin)
             self.mapView.addAnnotation(pin)
             CoreDataStackManager.sharedInstance().saveContext()
             
@@ -82,7 +82,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         for entry in fetchedCoordsController.fetchedObjects as! [Coords] {
             
             let coord = entry.lastLocation
-            print("Coords from original \(coord)")
+            // print("Coords from original \(coord)")
             
             // Set initial loation
             centerMapOnLocation(coord)
@@ -247,7 +247,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         mapView.setCenterCoordinate(location.coordinate, animated: true)
         
-        print("Got the following from core data \(location.coordinate)")
+        // print("Got the following from core data \(location.coordinate)")
     }
     
 }

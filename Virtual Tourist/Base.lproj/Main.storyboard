@@ -119,40 +119,52 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="322" id="yt1-9S-Ma0"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="V4r-u3-xnd">
-                                    <size key="itemSize" width="200" height="200"/>
+                                    <size key="itemSize" width="110" height="110"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="WcA-Ku-Jzc">
+                                <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="WcA-Ku-Jzc">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="337"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="QH0-qI-8ce" customClass="PhotoCell" customModule="Virtual_Tourist" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="rrs-I7-zEu">
-                                                    <rect key="frame" x="90" y="90" width="20" height="20"/>
-                                                </activityIndicatorView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KVK-aH-7fN">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                                                 </imageView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="rrs-I7-zEu">
+                                                    <rect key="frame" x="45" y="45" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="rrs-I7-zEu" firstAttribute="centerY" secondItem="KVK-aH-7fN" secondAttribute="centerY" id="6tV-KL-Psr"/>
+                                            <constraint firstItem="KVK-aH-7fN" firstAttribute="top" secondItem="QH0-qI-8ce" secondAttribute="top" id="B6J-OI-1Xd"/>
                                             <constraint firstAttribute="trailing" secondItem="KVK-aH-7fN" secondAttribute="trailing" id="Jjh-lh-1xk"/>
+                                            <constraint firstAttribute="bottom" secondItem="KVK-aH-7fN" secondAttribute="bottom" id="VAf-oo-lVo"/>
                                             <constraint firstAttribute="bottom" secondItem="KVK-aH-7fN" secondAttribute="bottom" id="bhU-Or-ZDC"/>
                                             <constraint firstItem="KVK-aH-7fN" firstAttribute="top" secondItem="QH0-qI-8ce" secondAttribute="top" id="j2T-i1-22O"/>
+                                            <constraint firstAttribute="trailing" secondItem="KVK-aH-7fN" secondAttribute="trailing" id="pdR-wh-aV2"/>
+                                            <constraint firstItem="KVK-aH-7fN" firstAttribute="leading" secondItem="QH0-qI-8ce" secondAttribute="leading" id="rTK-7M-iaS"/>
                                             <constraint firstItem="rrs-I7-zEu" firstAttribute="centerX" secondItem="KVK-aH-7fN" secondAttribute="centerX" id="rZ6-3p-0R1"/>
                                             <constraint firstItem="KVK-aH-7fN" firstAttribute="leading" secondItem="QH0-qI-8ce" secondAttribute="leading" id="wcB-S2-M0I"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Jjh-lh-1xk"/>
+                                                <exclude reference="bhU-Or-ZDC"/>
+                                                <exclude reference="j2T-i1-22O"/>
+                                                <exclude reference="wcB-S2-M0I"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
                                             <outlet property="imageView" destination="KVK-aH-7fN" id="0c6-S6-iop"/>
                                             <outlet property="loadingIndicator" destination="rrs-I7-zEu" id="1Ui-ec-gIr"/>
@@ -171,7 +183,7 @@
                                 </connections>
                             </collectionView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No images found :(" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6Q-5t-8jB">
-                                <rect key="frame" x="202" y="290" width="208" height="28"/>
+                                <rect key="frame" x="190" y="290" width="220" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -187,6 +199,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="u6Q-5t-8jB" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="70" id="0Vx-qu-6Ze"/>
                             <constraint firstItem="u6Q-5t-8jB" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="170" id="2Ge-J1-2b5"/>
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="top" secondItem="43q-6w-0QA" secondAttribute="bottom" id="4Wo-Uw-Tli"/>
                             <constraint firstAttribute="trailingMargin" secondItem="43q-6w-0QA" secondAttribute="trailing" constant="-20" id="Bpf-Ow-FHJ"/>
@@ -201,10 +214,13 @@
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="-20" id="sS0-eY-kId"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zu5-7e-vtS" secondAttribute="trailing" constant="-20" id="vCg-ul-H0L"/>
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="bottom" secondItem="bo0-et-hdS" secondAttribute="top" id="vVj-Ih-Cct"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u6Q-5t-8jB" secondAttribute="trailing" constant="70" id="xCN-b6-nZY"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="ZtR-qe-JrX"/>
+                                <exclude reference="2Ge-J1-2b5"/>
+                                <exclude reference="Md8-P8-uaS"/>
                             </mask>
                         </variation>
                     </view>

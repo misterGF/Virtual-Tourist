@@ -16,16 +16,14 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
     var selectedPin : Pin!
     var photos : Photo!
     var numOfPhotos : Int = 0
+    var page : Int = 1 //Keep track of page of results we are on
+    var limit : Int = 21 //Max per view
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var newCollection: UIBarButtonItem!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var noImagesFound: UILabel!
-
-    //var selectedIndexes = [NSIndexPath]()
-    //var insertedIndexPaths: [NSIndexPath]!
-    //var deletedIndexPaths: [NSIndexPath]!
-    //var updatedIndexPaths: [NSIndexPath]!
     
     // View Did Load
     override func viewDidLoad() {
@@ -40,6 +38,11 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
 
         mapView.setRegion(region, animated: true)
         
+        // Setup the pin as well
+        let pinAnnotation = MKPointAnnotation()
+        pinAnnotation.coordinate = coords
+        self.mapView.addAnnotation(pinAnnotation)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -47,9 +50,11 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         let coords = selectedPin!.coordinate
         
         // TODO : Check if images are already downloaded
-        if false {
-            
+        if selectedPin.photos.count > 0 {
+          print("We have images!")
         } else {
+            
+            print("No pictures found. Calling Flickr")
             
             let lat = coords.latitude
             let lng = coords.longitude
@@ -60,24 +65,23 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
             FlickrClient.sharedInstance().getImages(lat, lng: lng){
                 (json, error) in
                 
-                if let error = error {
+                if error != "" {
                     print("Error during network activity \(error)")
                 }
                 
-                if (json != nil) {
+                if (!json.isEmpty) {
                     
                     //Save image
-                    print("Found this many images \(json.count)")
+                    // print("Found this many images \(json.count)")
                     
-                    for (key, subJson):(String, JSON) in json {
+                    for (_, subJson):(String, JSON) in json {
                         
                         let obj = subJson.object
                         let id =  obj.valueForKey("id")!
                         
                         if let url =  obj.valueForKey("url_l") {
                             
-                            print("key: \(key) id: \(id) url:  \(url)")
-                            
+                            // print("key: \(key) id: \(id) url:  \(url)")
                             let dictionary : [String: AnyObject] = [ "id" : id, "url" : url]
                             
                             // Parse through each and save it to context
@@ -97,13 +101,17 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
                     dispatch_async(dispatch_get_main_queue()) {
                         self.noImagesFound.hidden = false
                         self.activityIndicator.stopAnimating()
+                        self.activityIndicator.hidden = true
                     }
                 }
             }
         }
 
     }
-
+    
+    override func viewWillDisappear(animated: Bool) {
+        saveContext()
+    }
 
     // Core Data Convenience
     lazy var sharedContext: NSManagedObjectContext =  {
@@ -116,6 +124,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
+        //return min(limit, selectedPin.photos.count)
         return selectedPin.photos.count
     }
     
@@ -126,6 +135,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as! PhotoCell
         
+        cell.loadingIndicator.hidden = false
         cell.loadingIndicator.startAnimating()
         cell.imageView.image = nil
         
@@ -133,6 +143,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         if photo.image != nil {
             photoImage = photo.image
             cell.loadingIndicator.stopAnimating()
+            cell.loadingIndicator.hidden = true
         }
         else
         {
@@ -150,6 +161,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
                     dispatch_async(dispatch_get_main_queue()) {
                         cell.imageView!.image = image
                         cell.loadingIndicator.stopAnimating()
+                        cell.loadingIndicator.hidden = true
                     }
                 }
             }
@@ -172,6 +184,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         
         let imageIdentifier: String = "\(photo.imageID).jpg"
         
+        // Delete it from core data
         collectionView.deleteItemsAtIndexPaths([indexPath])
         sharedContext.deleteObject(photo)
         
@@ -181,9 +194,24 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
     }
     
     func enableCollectionButton() {
-        if numOfPhotos == selectedPin.photos.count {
+        if numOfPhotos == limit { //selectedPin.photos.count {
             newCollection.enabled = true
         }
+    }
+    
+    // Make UICollection pretty
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Take up 1/3 of the with
+        let layout : UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumLineSpacing = 2
+        layout.minimumInteritemSpacing = 0
+        
+        let width = floor((self.collectionView.frame.size.width/3) - 2)
+        layout.itemSize = CGSize(width: width, height: width)
+        collectionView.collectionViewLayout = layout
     }
     
 

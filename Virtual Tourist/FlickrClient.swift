@@ -20,6 +20,7 @@ class FlickrClient: NSObject {
     let EXTRAS: String = "url_l"
     let FORMAT_TYPE: String = "json"
     let JSON_CALLBACK:Int = 1
+    let PER_PAGE: Int = 21
     
     override init(){
         super.init()
@@ -27,7 +28,7 @@ class FlickrClient: NSObject {
     
     func getImages(lat: Double, lng: Double, completionHandler: (result: JSON!, error: String?) -> Void) {
 
-        Alamofire.request(.GET, FLICKR_URL , parameters: ["method": SEARCH_METHOD, "api_key": FLICKR_API_KEY, "lat": lat, "lon": lng, "extras": EXTRAS, "format": FORMAT_TYPE, "nojsoncallback": JSON_CALLBACK])
+        Alamofire.request(.GET, FLICKR_URL , parameters: ["method": SEARCH_METHOD, "api_key": FLICKR_API_KEY, "lat": lat, "lon": lng, "extras": EXTRAS, "format": FORMAT_TYPE, "per_page": PER_PAGE, "nojsoncallback": JSON_CALLBACK])
             .responseJSON { response in
 
                 let dataFromNetworking = response.data
