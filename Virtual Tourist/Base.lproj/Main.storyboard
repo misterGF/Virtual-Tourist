@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="arz-sW-d00">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="arz-sW-d00">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -137,7 +137,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KVK-aH-7fN">
-                                                    <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="136" height="136"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="136" id="bCw-Fl-PXT"/>
+                                                        <constraint firstAttribute="width" constant="136" id="byM-iT-pul"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="rrs-I7-zEu">
                                                     <rect key="frame" x="45" y="45" width="20" height="20"/>
@@ -146,23 +150,33 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="rrs-I7-zEu" firstAttribute="centerY" secondItem="KVK-aH-7fN" secondAttribute="centerY" id="6tV-KL-Psr"/>
+                                            <constraint firstItem="rrs-I7-zEu" firstAttribute="centerY" secondItem="QH0-qI-8ce" secondAttribute="centerY" id="2K2-gk-Ufp"/>
+                                            <constraint firstItem="rrs-I7-zEu" firstAttribute="centerY" secondItem="KVK-aH-7fN" secondAttribute="centerY" constant="-13" id="6tV-KL-Psr"/>
                                             <constraint firstItem="KVK-aH-7fN" firstAttribute="top" secondItem="QH0-qI-8ce" secondAttribute="top" id="B6J-OI-1Xd"/>
                                             <constraint firstAttribute="trailing" secondItem="KVK-aH-7fN" secondAttribute="trailing" id="Jjh-lh-1xk"/>
-                                            <constraint firstAttribute="bottom" secondItem="KVK-aH-7fN" secondAttribute="bottom" id="VAf-oo-lVo"/>
+                                            <constraint firstItem="KVK-aH-7fN" firstAttribute="leading" secondItem="QH0-qI-8ce" secondAttribute="leading" id="PaO-IF-EfZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="KVK-aH-7fN" secondAttribute="bottom" constant="-26" id="VAf-oo-lVo"/>
+                                            <constraint firstItem="KVK-aH-7fN" firstAttribute="top" secondItem="QH0-qI-8ce" secondAttribute="top" id="Xac-mf-J2C"/>
                                             <constraint firstAttribute="bottom" secondItem="KVK-aH-7fN" secondAttribute="bottom" id="bhU-Or-ZDC"/>
+                                            <constraint firstItem="rrs-I7-zEu" firstAttribute="centerX" secondItem="QH0-qI-8ce" secondAttribute="centerX" id="djc-1Z-hwN"/>
                                             <constraint firstItem="KVK-aH-7fN" firstAttribute="top" secondItem="QH0-qI-8ce" secondAttribute="top" id="j2T-i1-22O"/>
-                                            <constraint firstAttribute="trailing" secondItem="KVK-aH-7fN" secondAttribute="trailing" id="pdR-wh-aV2"/>
+                                            <constraint firstAttribute="trailing" secondItem="KVK-aH-7fN" secondAttribute="trailing" constant="-26" id="pdR-wh-aV2"/>
                                             <constraint firstItem="KVK-aH-7fN" firstAttribute="leading" secondItem="QH0-qI-8ce" secondAttribute="leading" id="rTK-7M-iaS"/>
-                                            <constraint firstItem="rrs-I7-zEu" firstAttribute="centerX" secondItem="KVK-aH-7fN" secondAttribute="centerX" id="rZ6-3p-0R1"/>
+                                            <constraint firstItem="rrs-I7-zEu" firstAttribute="centerX" secondItem="KVK-aH-7fN" secondAttribute="centerX" constant="-13" id="rZ6-3p-0R1"/>
                                             <constraint firstItem="KVK-aH-7fN" firstAttribute="leading" secondItem="QH0-qI-8ce" secondAttribute="leading" id="wcB-S2-M0I"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="B6J-OI-1Xd"/>
                                                 <exclude reference="Jjh-lh-1xk"/>
+                                                <exclude reference="VAf-oo-lVo"/>
                                                 <exclude reference="bhU-Or-ZDC"/>
                                                 <exclude reference="j2T-i1-22O"/>
+                                                <exclude reference="pdR-wh-aV2"/>
+                                                <exclude reference="rTK-7M-iaS"/>
                                                 <exclude reference="wcB-S2-M0I"/>
+                                                <exclude reference="6tV-KL-Psr"/>
+                                                <exclude reference="rZ6-3p-0R1"/>
                                             </mask>
                                         </variation>
                                         <connections>
@@ -182,7 +196,7 @@
                                     <outlet property="delegate" destination="xgt-ah-jBg" id="lTL-Uv-ruT"/>
                                 </connections>
                             </collectionView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No images found :(" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6Q-5t-8jB">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No images found :(" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6Q-5t-8jB">
                                 <rect key="frame" x="190" y="290" width="220" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -192,14 +206,18 @@
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="2zm-SR-wj0"/>
-                                    <barButtonItem enabled="NO" title="New Collection" id="7AP-cI-Fl6"/>
+                                    <barButtonItem enabled="NO" title="New Collection" id="7AP-cI-Fl6">
+                                        <connections>
+                                            <action selector="newCollectionStart:" destination="xgt-ah-jBg" id="vCW-89-tDZ"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="dZr-kr-det"/>
                                 </items>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="u6Q-5t-8jB" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="70" id="0Vx-qu-6Ze"/>
+                            <constraint firstItem="u6Q-5t-8jB" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="170" id="0Vx-qu-6Ze"/>
                             <constraint firstItem="u6Q-5t-8jB" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="170" id="2Ge-J1-2b5"/>
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="top" secondItem="43q-6w-0QA" secondAttribute="bottom" id="4Wo-Uw-Tli"/>
                             <constraint firstAttribute="trailingMargin" secondItem="43q-6w-0QA" secondAttribute="trailing" constant="-20" id="Bpf-Ow-FHJ"/>
@@ -214,7 +232,7 @@
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="leading" secondItem="XQa-DA-l3D" secondAttribute="leadingMargin" constant="-20" id="sS0-eY-kId"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zu5-7e-vtS" secondAttribute="trailing" constant="-20" id="vCg-ul-H0L"/>
                             <constraint firstItem="Zu5-7e-vtS" firstAttribute="bottom" secondItem="bo0-et-hdS" secondAttribute="top" id="vVj-Ih-Cct"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="u6Q-5t-8jB" secondAttribute="trailing" constant="70" id="xCN-b6-nZY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u6Q-5t-8jB" secondAttribute="trailing" constant="170" id="xCN-b6-nZY"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">

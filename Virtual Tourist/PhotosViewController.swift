@@ -13,19 +13,23 @@ import SwiftyJSON
 
 class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    // Declare my top level variables
     var selectedPin : Pin!
     var photos : Photo!
-    var numOfPhotos : Int = 0
-    var page : Int = 1 //Keep track of page of results we are on
-    var limit : Int = 21 //Max per view
+    var page: Int = 1 // Keep track of what page we want to pull from API
+    var numOfPhotos: Int = 0
+    var numOnScreen: Int = 12 //We have screen space for 12. Enable new collection after that number is reached
     
+    
+    // Declare my outlooks
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var newCollection: UIBarButtonItem!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var noImagesFound: UILabel!
     
-    // View Did Load
+    
+    //View Did/Will/etc functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,18 +46,15 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         let pinAnnotation = MKPointAnnotation()
         pinAnnotation.coordinate = coords
         self.mapView.addAnnotation(pinAnnotation)
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         
         let coords = selectedPin!.coordinate
         
-        // TODO : Check if images are already downloaded
         if selectedPin.photos.count > 0 {
           print("We have images!")
         } else {
-            
             print("No pictures found. Calling Flickr")
             
             let lat = coords.latitude
@@ -61,59 +62,18 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
             
             // Start activity indicator
             activityIndicator.startAnimating()
-            
-            FlickrClient.sharedInstance().getImages(lat, lng: lng){
-                (json, error) in
-                
-                if error != "" {
-                    print("Error during network activity \(error)")
-                }
-                
-                if (!json.isEmpty) {
-                    
-                    //Save image
-                    // print("Found this many images \(json.count)")
-                    
-                    for (_, subJson):(String, JSON) in json {
-                        
-                        let obj = subJson.object
-                        let id =  obj.valueForKey("id")!
-                        
-                        if let url =  obj.valueForKey("url_l") {
-                            
-                            // print("key: \(key) id: \(id) url:  \(url)")
-                            let dictionary : [String: AnyObject] = [ "id" : id, "url" : url]
-                            
-                            // Parse through each and save it to context
-                            let photo = Photo(dictionary: dictionary, insertIntoMangedObjectContext: self.sharedContext)
-                            
-                            //Assign pin to photo
-                            photo.pin = self.selectedPin
-                            
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.collectionView.reloadData()
-                                self.activityIndicator.stopAnimating()
-                            }
-                        }
-                    }
-                } else {
-                    // No photos display info
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.noImagesFound.hidden = false
-                        self.activityIndicator.stopAnimating()
-                        self.activityIndicator.hidden = true
-                    }
-                }
-            }
+            getImagesFromFlickr(lat, lng: lng, page: self.page)
         }
-
     }
     
     override func viewWillDisappear(animated: Bool) {
         saveContext()
     }
+    // End of view will/did/etc funcs
 
-    // Core Data Convenience
+    
+    
+    // Core data related funcs
     lazy var sharedContext: NSManagedObjectContext =  {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }()
@@ -122,9 +82,90 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         CoreDataStackManager.sharedInstance().saveContext()
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func deleteAllPics(){
+        for photo in selectedPin.photos {
+            sharedContext.deleteObject(photo)
+        }
+    }
+    //End of core data
+
+   
+    
+    // Flickr related functions
+    func getImagesFromFlickr(lat: CLLocationDegrees, lng: CLLocationDegrees, page: Int) {
         
-        //return min(limit, selectedPin.photos.count)
+        FlickrClient.sharedInstance().getImages(lat, lng: lng, page: page){
+            (json, error) in
+            
+            if error != "" {
+                print("Error during network activity \(error)")
+            }
+            
+            if (!json.isEmpty) {
+                
+                //Save image
+                // print("Found this many images \(json.count)")
+                
+                for (_, subJson):(String, JSON) in json {
+                    
+                    let obj = subJson.object
+                    let id =  obj.valueForKey("id")!
+                    
+                    if let url =  obj.valueForKey("url_l") {
+                        
+                        // print("key: \(key) id: \(id) url:  \(url)")
+                        let dictionary : [String: AnyObject] = [ "id" : id, "url" : url]
+                        
+                        // Parse through each and save it to context
+                        let photo = Photo(dictionary: dictionary, insertIntoMangedObjectContext: self.sharedContext)
+                        
+                        //Assign pin to photo
+                        photo.pin = self.selectedPin
+                        
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.collectionView.reloadData()
+                            self.activityIndicator.stopAnimating()
+                            self.activityIndicator.hidden = true
+                        }
+                    }
+                }
+            } else {
+                // No photos display info
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.noImagesFound.hidden = false
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.hidden = true
+                }
+            }
+        }
+    }
+    
+    func downloadFromFlickr(photo: Photo!, cell: PhotoCell!){
+        // Start the task that will eventually download the image
+        FlickrClient.sharedInstance().taskForImage(photo.url) { data, error in
+            
+            if let data = data {
+                let image = UIImage(data: data)
+                
+                // cache
+                photo.image = image
+                
+                // update the main thread
+                dispatch_async(dispatch_get_main_queue()) {
+                    cell.imageView!.image = image
+                    cell.loadingIndicator.stopAnimating()
+                    cell.loadingIndicator.hidden = true
+                }
+            }
+        }
+    }
+    
+    // End of Flickr Functions
+    
+    
+    
+    // Collection View Functions s
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedPin.photos.count
     }
     
@@ -147,24 +188,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         }
         else
         {
-            
-            // Start the task that will eventually download the image
-            FlickrClient.sharedInstance().taskForImage(photo.url) { data, error in
-                
-                if let data = data {
-                    let image = UIImage(data: data)
-                    
-                    // cache
-                    photo.image = image
-                    
-                    // update the main thread
-                    dispatch_async(dispatch_get_main_queue()) {
-                        cell.imageView!.image = image
-                        cell.loadingIndicator.stopAnimating()
-                        cell.loadingIndicator.hidden = true
-                    }
-                }
-            }
+            downloadFromFlickr(photo, cell: cell)
         }
         
         // Check where we are at.
@@ -172,9 +196,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         self.enableCollectionButton()
         
         cell.imageView.image = photoImage
-        
         return cell
-    
     }
  
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -193,14 +215,32 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         self.saveContext()
     }
     
+    // End of collection view functions
+    
+    
+    // Action buttons
     func enableCollectionButton() {
-        if numOfPhotos == limit { //selectedPin.photos.count {
+        
+        if numOfPhotos == numOnScreen {
             newCollection.enabled = true
         }
     }
     
-    // Make UICollection pretty
-    override func viewDidLayoutSubviews() {
+    @IBAction func newCollectionStart(sender: AnyObject) {
+        
+        print("New collection requested")
+        deleteAllPics() // Delete picks
+        self.page++ //Increase to the next page
+        getImagesFromFlickr(selectedPin.lat, lng: selectedPin.lng, page: page)
+        
+    }
+    
+    // End of action buttons
+    
+
+    
+    //Customize UIViewColleciton - Done in storyboard now
+    override func viewWillLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         // Take up 1/3 of the with
@@ -209,11 +249,17 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         layout.minimumLineSpacing = 2
         layout.minimumInteritemSpacing = 0
         
-        let width = floor((self.collectionView.frame.size.width/3) - 2)
-        layout.itemSize = CGSize(width: width, height: width)
-        collectionView.collectionViewLayout = layout
+        if let frameWidth: CGFloat = self.collectionView.frame.size.width {
+            if frameWidth != 0 {
+                let width = floor(frameWidth/3)
+                layout.itemSize = CGSize(width: width, height: width)
+                collectionView.collectionViewLayout = layout
+            }
+        }
+        
+
     }
-    
+    // End of customization
 
     
 }
