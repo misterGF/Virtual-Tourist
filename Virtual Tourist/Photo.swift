@@ -52,6 +52,5 @@ class Photo : NSManagedObject {
             try NSFileManager.defaultManager().removeItemAtPath(path)
         } catch _ {
         }
-        //NSCache().removeObjectForKey(path)
     }
 }

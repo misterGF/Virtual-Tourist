@@ -85,6 +85,11 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
     func deleteAllPics(){
         for photo in selectedPin.photos {
             sharedContext.deleteObject(photo)
+            
+            // Remove from documents directory
+            let id: String = "\(photo.imageID).jpg"
+            photo.removeFromDocumentsDirectory(id)
+           
         }
     }
     //End of core data
@@ -164,7 +169,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
     
     
     
-    // Collection View Functions s
+    // Collection View Functions
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedPin.photos.count
     }
@@ -239,7 +244,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
     
 
     
-    //Customize UIViewColleciton - Done in storyboard now
+    /* Done in storyboard now -- Customize UIViewColleciton -
     override func viewWillLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -252,6 +257,7 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
         if let frameWidth: CGFloat = self.collectionView.frame.size.width {
             if frameWidth != 0 {
                 let width = floor(frameWidth/3)
+                print(width)
                 layout.itemSize = CGSize(width: width, height: width)
                 collectionView.collectionViewLayout = layout
             }
@@ -260,6 +266,6 @@ class PhotosViewController : UIViewController,  MKMapViewDelegate, UICollectionV
 
     }
     // End of customization
-
+    */
     
 }

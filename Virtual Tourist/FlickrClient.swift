@@ -62,7 +62,7 @@ class FlickrClient: NSObject {
     class func sharedInstance() -> FlickrClient {
         
         struct Singleton {
-            static var sharedInstance = FlickrClient()
+            static let sharedInstance = FlickrClient()
         }
         
         return Singleton.sharedInstance
